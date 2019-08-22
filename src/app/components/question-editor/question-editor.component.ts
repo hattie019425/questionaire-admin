@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { QuestionService } from '../../services/question.service';
 import { Question } from 'src/app/services/question';
 import { Option } from 'src/app/services/option';
@@ -10,23 +10,29 @@ import { Option } from 'src/app/services/option';
 })
 export class QuestionEditorComponent implements OnInit {
 
-  question: Question;
-  editOption: Option;
+  @Input() question: Question;
+  @Output() voted = new EventEmitter<boolean>();
+  
   constructor(private questionService: QuestionService) { }
 
   ngOnInit() {
-    this.question = new Question();
-    this.editOption = new Option();
-    this.questionService.getQuestions().subscribe(question => console.log(question));
+    if (!this.question) {
+      this.question = new Question();
+      this.addOption();
+    }
   }
 
-  add() {
-    this.question.options.push(this.editOption);
-    this.editOption = new Option();
+  addOption() {
+    this.question.options.push(new Option());
   }
 
-  delete(option) {
+  deleteOption(option: Option) {
     const optionIndex = this.question.options.indexOf(option);
-    this.question.options.splice(optionIndex);
+    this.question.options.splice(optionIndex, 1);
   }
+
+  saveQuestion() {
+    this.questionService.saveQuestion(this.question).subscribe((res) => console.log(res));
+  }
+
 }

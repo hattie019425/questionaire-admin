@@ -1,33 +1,17 @@
-<div>
-  <h2>Question Editor</h2>
-  <div><span>id: </span>{{question.id}}</div>
-  <div>
-    <div>
-      <label>Question:
-        <input [(ngModel)]="question.body" placeholder="Question Body" />
-      </label>
-    </div>
-    <div>
-      <label>Option: </label>
-        <input [(ngModel)]="editOption.mark" placeholder="Mark" />
-        .
-        <input [(ngModel)]="editOption.body" placeholder="Body" />
-        <button class="add" title="add option" (click)="add()">+</button>
-    </div>
-    <ul class="questions">
-      <li class='option' *ngFor="let option of question.options">
-        <span>{{option.mark}}. {{option.body}}</span>
-        <button class="delete" title="delete option" (click)="delete(option)">x</button>
-      </li>
-    </ul>
+<div fxLayout="row wrap">
+  <div fxLayout="row" fxFlex="100">
+    <mat-form-field fxFlex>
+      <textarea matInput [(ngModel)]="question.body" placeholder="Question Body"></textarea>
+    </mat-form-field>
   </div>
-  <button (click)="goBack()">go back</button>
-  <button (click)="save()">save</button>
+  <mat-button icon="add" title="Add Option" (click)="addOption()"></mat-button>
+  <mat-button icon="save" title="Save Question" (click)="saveQuestion()"></mat-button>
+
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutGap="20px" *ngFor="let option of question.options; index as i">
+    <span fxFlexAlign="center"> {{i+1}} &ndash;</span>
+    <mat-form-field fxFlex>
+      <input matInput [(ngModel)]="option.body" placeholder="Body" />
+    </mat-form-field>
+    <mat-button icon="delete" title="Delete Option" (click)="deleteOption(option)"></mat-button>
+  </div>
 </div>
-
-
-<!-- 
-Copyright Google LLC. All Rights Reserved.
-Use of this source code is governed by an MIT-style license that
-can be found in the LICENSE file at http://angular.io/license
--->

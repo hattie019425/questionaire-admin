@@ -1,7 +1,7 @@
 import { Option } from './option';
 
 export class Question {
-    id: string
+    _id: string
     body: string
     options: Option[] = []
 }

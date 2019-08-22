@@ -1,0 +1,22 @@
+<div>
+  <mat-toolbar color="primary">
+    <mat-toolbar-row fxLayout="row wrap">
+      <span>Questionaire Admin</span>
+      <span fxFlex class="example-spacer"></span>
+      <mat-button icon="add" title="Add Question" color="basic" (click)="addQuestion()"></mat-button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <question-editor *ngIf="newQuestion" [question]="newQuestion"></question-editor>
+  <mat-expansion-panel *ngFor="let question of questions;index as i">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Q{{i+1}}
+      </mat-panel-title>
+      <mat-panel-description>{{question.body}}</mat-panel-description>
+    </mat-expansion-panel-header>
+    <mat-action-row>
+      <mat-button icon="delete" title="Remove Question" (click)="remove(question)"></mat-button>
+    </mat-action-row>
+    <question-editor [question]="question"></question-editor>
+  </mat-expansion-panel>
+</div>
